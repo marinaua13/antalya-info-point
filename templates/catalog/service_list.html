@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock title %}
+{% block body %} class="about-us bg-gray-200" {% endblock body %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door2.jpg' %}');">
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white">Here you can find a lot of important service in Antalya</h1>
+            <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>   
+{#            <button type="submit" class="btn bg-white text-dark">Create Account</button>#}
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
+  {% if service_list %}
+    <div class="row">
+      {% for service in service_list %}
+        <div class="col-md-6 mb-4">
+          <div class="offer-card p-3 border rounded">
+            <h3><a href="{% url 'catalog:service-detail' pk=service.id %}">{{ service.name }}</a></h3>
+{#            <p>{{ service.description }}</p>#}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>There are no offers in catalog</p>
+  {% endif %}
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+    <div class="pagination">
+      <span class="page-links">
+        {% if page_obj.has_previous %}
+          <a href="?page=1">&laquo; First</a>
+          <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span class="page-current">
+          Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </span>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

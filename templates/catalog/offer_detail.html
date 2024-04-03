@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<!-- -------- START HEADER 7 w/ text and video ------- -->
+<header class="bg-gradient-dark">
+  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door2.jpg' %}');">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mx-auto my-auto">
+          <h1 class="text-white">Here you can find a lot of important service in Antalya</h1>
+          <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <!-- START Testimonials w/ user image & text & info -->
+    <section class="py-sm-7 py-5 position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mx-auto">
+                    <div class="mt-n8 mt-md-n9 text-center">
+                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tmb.jpg' %}"  loading="lazy">
+                    </div>
+                    <div class="row py-5">
+                        <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h3 class="mb-0">{{ offer.name }}</h3>
+                            </div>
+                            <div>
+                                <h4><a href="{% url 'catalog:author_detail' pk=object.id %}"> Master</a></h4>
+                                <p>{{ offer.posted_by }}</p>
+                            </div>
+                            <div>
+                                <h4>Price:</h4>
+                                <p>{{ offer.price }}</p>
+                            </div>
+                            <div>
+                                <h4>Company:</h4>
+                                <p>{{ offer.company }}</p>
+                            </div>
+                            {% if offer.description %}
+                            <div>
+                                <h4>About:</h4>
+                                <p>{{ offer.description }}</p>
+                            </div>
+                            {% else %}
+                            <div>
+                                <p>🌺 🌺 🌺</p>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
