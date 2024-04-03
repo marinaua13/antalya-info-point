@@ -6,7 +6,7 @@ from django.forms import forms
 class Author(AbstractUser):
     years_of_experience = models.IntegerField(default=0, blank=True, null=True)
     mobile_phone = models.CharField(max_length=20, blank=True, null=True)
-    picture = models.ImageField(upload_to='authors_pictures', null=True, blank=True)
+    picture = models.ImageField(upload_to="authors_pictures", null=True, blank=True)
 
     # class Meta:
     #     model = Author
@@ -79,4 +79,3 @@ class Commentary(models.Model):
         ordering = ["-created_time"]
         verbose_name = "Commentary"
         verbose_name_plural = "Commentaries"
-

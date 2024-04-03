@@ -39,17 +39,17 @@ class ServiceDetailView(generic.DetailView):
 
 class ServiceOfferListView(generic.ListView):
     model = Service
-    template_name = 'catalog/service_offers_list.html'
-    context_object_name = 'offers'
+    template_name = "catalog/service_offers_list.html"
+    context_object_name = "offers"
 
     def get_queryset(self):
-        service_id = self.kwargs['service_id']
+        service_id = self.kwargs["service_id"]
         service = get_object_or_404(Service, pk=service_id)
         return service.offers.all()
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['service'] = get_object_or_404(Service, pk=self.kwargs['service_id'])
+        context["service"] = get_object_or_404(Service, pk=self.kwargs["service_id"])
         return context
 
 
@@ -62,7 +62,9 @@ class AuthorListView(generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Отримання списку авторів, які мають пропозиції
-        context['authors_with_offers'] = Author.objects.filter(offers__isnull=False).distinct()
+        context["authors_with_offers"] = Author.objects.filter(
+            offers__isnull=False
+        ).distinct()
         return context
 
 
@@ -70,13 +72,13 @@ class OfferListView(generic.ListView):
     model = Offer
     template_name = "catalog/offer_list.html"
     queryset = Offer.objects.all()
-    paginate_by = 3
+    paginate_by = 4
 
 
 class OfferDetailView(generic.DetailView):
     model = Offer
     template_name = "catalog/offer_detail.html"
-    context_object_name = 'offer'
+    context_object_name = "offer"
 
 
 class ServiceCreateView(LoginRequiredMixin, generic.CreateView):
@@ -94,7 +96,7 @@ class OfferCreateList(LoginRequiredMixin, generic.CreateView):
 class AuthorUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Author
     form_class = AuthorsForm
-    template_name = 'catalog/author_form.html'
+    template_name = "catalog/author_form.html"
     success_url = reverse_lazy("catalog:author-list")
 
     def form_valid(self, form):
@@ -114,14 +116,14 @@ class AuthorCreateView(LoginRequiredMixin, generic.CreateView):
 
 class AuthorDetailView(generic.DetailView):
     model = Author
-    template_name = 'catalog/author_detail.html'
+    template_name = "catalog/author_detail.html"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         author = self.object
         # Отримання пропозицій (offers) автора
         offers = Offer.objects.filter(posted_by=author)
-        context['offers'] = offers
+        context["offers"] = offers
         return context
 
 
@@ -153,13 +155,20 @@ def search_offer(request):
     if request.method == "POST":
         searched = request.POST["searched"]
         offers = Offer.objects.filter(name__icontains=searched)
-        return render(request, "catalog/offer_search.html", {'searched': searched, 'offers': offers}, )
+        return render(
+            request,
+            "catalog/offer_search.html",
+            {"searched": searched, "offers": offers},
+        )
     else:
         return render(request, "catalog/offer_search.html", {})
 
 
 def info(request):
-    return render(request, "includes/info_general.html ", )
+    return render(
+        request,
+        "includes/info_general.html ",
+    )
 
 
 class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
@@ -170,12 +179,12 @@ class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
 
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.offer = get_object_or_404(Offer, pk=self.kwargs['pk'])
+        form.instance.offer = get_object_or_404(Offer, pk=self.kwargs["pk"])
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
         offers = self.get_object()
-        context['user_offers'] = offers
+        context["user_offers"] = offers
         return context
