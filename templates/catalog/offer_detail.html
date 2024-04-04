@@ -64,4 +64,58 @@
         </div>
     </section>
 </div>
-{% endblock %}
+  </div>
+   <section class="py-lg-5">
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <div class="card box-shadow-xl overflow-hidden mb-5">
+            <div class="row">
+              <div class="col-lg-5 position-relative bg-cover px-0" style="background-image: url('{% static 'vector-comment-icon.jpg' %}')" loading="lazy">
+                <div class="z-index-2 text-center d-flex h-100 w-100 d-flex m-auto justify-content-center">
+                  <div class="mask bg-gradient-dark opacity-3"></div>
+                  <div class="p-5 ps-sm-8 position-relative text-start my-auto z-index-2">
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-7">
+                <form class="p-3" id="contact-form" method="post">
+                  <div class="card-header px-4 py-sm-5 py-3">
+                    <h2>Hello!</h2>
+                    <p class="lead"> We would be very happy if you could leave your comments on any occasion</p>
+                  </div>
+                  <div class="card-body pt-1">
+                    <div class="row">
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="input-group input-group-static mb-4">
+{#                          {% if not offer.commentaries.all %}#}
+{#                            <p>No Comments Yet... <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}">Add Comment</a></p>#}
+{#                          {% else %}#}
+                            <p><strong>Comments:</strong></p>
+                        </div>
+                      </div>
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="input-group input-group-static mb-4">
+                          <ul>
+                              {% for comment in offer.commentaries.all %}
+                                <li>
+                                  <strong>{{ comment.created_time }}</strong><br>
+                                  {{ comment.user }}: {{ comment.content }}
+                                </li>
+                              {% endfor %}
+                        </div>
+                      </div>
+                      <div class="col-md-12 pe-2 mb-3">
+                        <div class="input-group input-group-static mb-4">
+                          <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn btn-primary">Add Comment</a>
+{#                          {% endif %}#}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+  </section>
+{% endblock content %}

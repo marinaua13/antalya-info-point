@@ -10,6 +10,13 @@
             rel="tooltip" title="Designed and Coded by Creative Tim" data-placement="bottom">
             AntalyaInfoPoint
           </a>
+        <div class="d-flex mx-auto"> <!-- Змінено -->
+              <form class="d-flex ml-auto" role="search" method="post" action="{% url 'catalog:search-offer' %}">
+                  {% csrf_token %}
+                  <input class="form-control me-2" type="search" placeholder="Search Offer" aria-label="Search" name="searched">
+                  <input type="Submit" value="🔍" style="background: none; border: none;">
+              </form>
+          </div>
           <button class="navbar-toggler shadow-none ms-2" type="button" data-bs-toggle="collapse"
             data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false"
             aria-label="Toggle navigation">
@@ -63,13 +70,7 @@
 {#                        {% endfor %}#}
 {#                    {% endif %}#}
 
-                    {% if request.user.is_superuser %}
-                    <a href="{% url 'admin:index' %}" class="dropdown-item border-radius-md">
-                    {% else %}
-                      <a href="/" class="dropdown-item border-radius-md">
-                    {% endif %}
-                      <span>Admin</span>
-                    </a>
+
                     <a href="{% url 'catalog:service-list' %}" class="dropdown-item border-radius-md">
                       <span>Services</span>
                     </a>
@@ -80,85 +81,23 @@
                       <span>Specialists</span>
                     </a>
                     <h6 class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1 mt-3">
-                      Account
+                      Account:
                     </h6>
 
                     {% if request.user.is_authenticated %}
-                        Me:<a href="{{ request.user.get_absolute_url }}">{{ request.user.get_username }}</a>
-                      {% endif %}
-                      <a href="{% url 'logout'%}"class="dropdown-item border-radius-md">
-                        <span>Logout</span>
-                      </a>
-                    
+                      <a href="{{ request.user.get_absolute_url }}">{{ request.user.get_username }}</a>
+                    {% endif %}
                       <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
-                        <span>Login</span>
-                      </a>
-{#                      <a href="{% url 'register' %}" class="dropdown-item border-radius-md">#}
-{#                        <span>Register</span>#}
-{#                      </a>#}
-                  
-                    
-
-                  <div class="d-lg-none">
-                    <h6 class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">
-                      Landing Pages
-                    </h6>
-                    {% if request.user.is_superuser %}
-                    <a href="{% url 'admin:index' %}" class="dropdown-item border-radius-md">
-                    {% else %}
-                      <a href="/" class="dropdown-item border-radius-md">
-                    {% endif %}
-                      <span>Presentation</span>
+                    <span>Login</span>
                     </a>
-                    <a href="{% url 'catalog:index' %}" class="dropdown-item border-radius-md">
-                      <span>About Us</span>
-                    </a>
-                    <a href="{% url 'catalog:service-list' %}" class="dropdown-item border-radius-md">
-                      <span>Contact Us</span>
-                    </a>
-                    <a href="{% url 'catalog:offer-list' %}" class="dropdown-item border-radius-md">
-                      <span>Author</span>
-                    </a>
-
-                    <h6 class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1 mt-3">
-                      Account
-                    </h6>
-
-                    {% if request.user.is_authenticated %}
-                    
-                      {% if request.user.is_superuser %}
-{#                        <a href="{% url 'admin:password_change' %}" class="dropdown-item border-radius-md">#}
-{#                          <span>Change Password</span>#}
-{#                        </a>#}
-                        <a href="{% url 'admin:logout' %}" class="dropdown-item border-radius-md">
-                          <span>Logout</span>
-                        </a>
-                      {% else %}
-{#                        <a href="{% url 'password_change' %}" class="dropdown-item border-radius-md">#}
-{#                          <span>Change Password</span>#}
-{#                        </a>#}
-                        <a href="{% url 'logout' %}" class="dropdown-item border-radius-md">
-                          <span>Logout</span>
-                        </a>
-                      {% endif %}
-                    {% else %}
-                    <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
-                      <span>Sign In</span>
-                    </a>
-                    <a href="{% url 'catalog:register' %}" class="dropdown-item border-radius-md">
-                      <span>Sign Up</span>
-                    </a>
-                    {% endif %}
-
-                  </div>
-
-                </div>
-              </li>
+                <a href="{% url 'catalog:register' %}" class="dropdown-item border-radius-md">
+                    <span>Register</span>
+                </a>
               <li class="nav-item dropdown dropdown-hover mx-2">
                 <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuDocs"
                   data-bs-toggle="dropdown" aria-expanded="false">
                   <i class="material-icons opacity-6 me-2 text-md">article</i>
-                  Docs
+                  Important
                   <img src="{% static 'img/down-arrow-dark.svg' %}" alt="down-arrow" class="arrow ms-auto ms-md-2">
                 </a>
                 <ul
@@ -168,47 +107,47 @@
                     <ul class="list-group">
                       <li class="nav-item list-group-item border-0 p-0">
                         <a class="dropdown-item py-2 ps-3 border-radius-md"
-                          href="https://www.creative-tim.com/learning-lab/bootstrap/overview/material-kit?AFFILIATE=128200">
+                          href="{% url 'catalog:info' %}">
                           <h6
                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">
-                            Getting Started</h6>
-                          <span class="text-sm">All about overview, quick start, license and contents</span>
+                            Custom</h6>
+                          <span class="text-sm">All about custom</span>
                         </a>
                       </li>
                       <li class="nav-item list-group-item border-0 p-0">
                         <a class="dropdown-item py-2 ps-3 border-radius-md"
-                          href="https://www.creative-tim.com/learning-lab/bootstrap/colors/material-kit?AFFILIATE=128200">
+                          href="{% url 'catalog:info' %}">
                           <h6
                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">
-                            Foundation</h6>
-                          <span class="text-sm">See our colors, icons and typography</span>
+                            Post 2</h6>
+                          <span class="text-sm">About stay with car</span>
                         </a>
                       </li>
                       <li class="nav-item list-group-item border-0 p-0">
                         <a class="dropdown-item py-2 ps-3 border-radius-md"
-                          href="https://www.creative-tim.com/learning-lab/bootstrap/alerts/material-kit?AFFILIATE=128200">
+                          href="{% url 'catalog:info' %}">
                           <h6
                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">
-                            Components</h6>
-                          <span class="text-sm">Explore our collection of fully designed components</span>
+                            Post 3</h6>
+                          <span class="text-sm">About Insurance</span>
                         </a>
                       </li>
                       <li class="nav-item list-group-item border-0 p-0">
                         <a class="dropdown-item py-2 ps-3 border-radius-md"
-                          href="https://www.creative-tim.com/learning-lab/bootstrap/datepicker/material-kit?AFFILIATE=128200">
+                          href="{% url 'catalog:info' %}">
                           <h6
                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">
-                            Plugins</h6>
-                          <span class="text-sm">Check how you can integrate our plugins</span>
+                            Post 4</h6>
+                          <span class="text-sm">About Hospital</span>
                         </a>
                       </li>
                       <li class="nav-item list-group-item border-0 p-0">
                         <a class="dropdown-item py-2 ps-3 border-radius-md"
-                          href="https://www.creative-tim.com/learning-lab/bootstrap/utilities/material-kit?AFFILIATE=128200">
+                          href="{% url 'catalog:info' %}">
                           <h6
                             class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center p-0">
-                            Utility Classes</h6>
-                          <span class="text-sm">For those who want flexibility, use our utility classes</span>
+                            Post 5</h6>
+                          <span class="text-sm">About Something</span>
                         </a>
                       </li>
                     </ul>
@@ -258,9 +197,10 @@
               {% if request.user.is_authenticated %}
               <li class="nav-item ms-lg-auto">
                 <a class="nav-link nav-link-icon me-2" href="{% url 'logout' %}">
-                  <i class="fa fa-sign-out me-1"></i>
-                  <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Logout">Logout</p>
+                  <form action="{% url 'logout' %}" method="post">
+                        {% csrf_token %}
+                        <button type="submit" class="dropdown-item border-radius-md">Logout</button>
+                    </form>
                 </a>
               </li>
               {% else %}
@@ -272,10 +212,10 @@
                 </a>
               </li>
               {% endif %}
-              <li class="nav-item my-auto ms-3 ms-lg-0">
-                <a href="https://appseed.us/product/material-kit/django/" target="_blank"
-                   class="btn btn-sm  bg-gradient-primary  mb-0 me-1 mt-2 mt-md-0">Download</a>
-              </li>
+{#              <li class="nav-item my-auto ms-3 ms-lg-0">#}
+{#                <a href="https://appseed.us/product/material-kit/django/" target="_blank"#}
+{#                   class="btn btn-sm  bg-gradient-primary  mb-0 me-1 mt-2 mt-md-0">Download</a>#}
+{#              </li>#}
             </ul>
           </div>
         </div>
