@@ -1,8 +1,103 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Specialist page {% endblock %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
 
 {% block content %}
-  <h1>
-    Username: {{ driver.username }}
+<!-- -------- START HEADER 7 w/ text and video ------- -->
+<header class="bg-gradient-dark">
+  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door2.jpg' %}');">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mx-auto my-auto">
+          <h1 class="text-white">Here you can find information about specialist</h1>
+{#          <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>#}
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <!-- START Testimonials w/ user image & text & info -->
+    <section class="py-sm-7 py-5 position-relative">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mx-auto">
+{#                    <div class="mt-n8 mt-md-n9 text-center">#}
+{#                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tmb.jpg' %}"  loading="lazy">#}
+{#                    </div>#}
+                <a href="{% url 'catalog:author-update' pk=author.id %}" class="btn btn-secondary link-to-page">
+      Update data & photo
+    </a>
+        {% if author.picture %}
+          <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{{ author.picture.url }}" alt="{{ author.username }}'s Picture" class="img-fluid rounded-circle">
+        {% else %}
+          <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'default_image.jpg' %}" alt="Default Picture" class="img-fluid rounded-circle">
+        {% endif %}
+      </div>
+                    <div class="row py-5">
+                        <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h3 class="mb-0">{{ author.username }}</h3>
+                            </div>
+                            
+                            <div>
+                                <h4>First name:</h4>
+                                <p>{{ author.first_name }}</p>
+                            </div>
+                            <div>
+                                <h4>Last name:</h4>
+                                <p>{{ author.last_name }}</p>
+                            </div>
+                          <div>
+                                <h4>Email:</h4>
+                                <p>{{ author.email }}</p>
+                            </div>
+                          <div>
+                                <h4>Mobile:</h4>
+                                <p>{{ author.mobile_phone }}</p>
+                            </div>
+                          <div>
+                                <h4>Years of experience:</h4>
+                                <p>{{ author.years_of_experience }}</p>
+                            </div>
+
+                          <div class="ml-3 mt-4">
+                             <h4>Offers</h4>
+
+                                  {% for offer in author.offers.all %}
+
+                            <hr>
+                            <p><strong>Name:</strong><a
+                                href="{% url "catalog:offer-detail" pk=offer.id %} ">{{ offer.name }}</a></p>
+                                      <p><strong>Service:</strong> {{ offer.service_type.name }}</p>
+                                      <p class="text-muted"><strong>Id:</strong> {{ offer.id }}</p>
+                                  {% empty %}
+                                    <p>No offers!</p>
+                            <a href="{% url 'catalog:offer-list' %}" class="btn btn-primary link-to-page">Go back to
+                              Offers</a>
+                                  {% endfor %}
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+  </div>
+{% endblock content %}
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{#  <h1>#}
+{#    Username: {{ driver.username }}#}
 {#    <a href="{% url 'taxi:driver-delete' pk=driver.id %}" class="btn btn-danger link-to-page">#}
 {#      Delete#}
 {#    </a>#}
@@ -10,12 +105,12 @@
 {#    <a href="{% url 'taxi:driver-update' pk=driver.id %}" class="btn btn-secondary link-to-page">#}
 {#      Update license number#}
 {#    </a>#}
-  </h1>
-
-  <p><strong>First name:</strong> {{ author.first_name }}</p>
-  <p><strong>Last name:</strong> {{ author.last_name }}</p>
-  <p><strong>Email:</strong> {{ author.email }}</p>
-  <p><strong>Mob:</strong> {{ author.mobile_phone }}</p>
-
-  
-{% endblock %}
+{#  </h1>#}
+{##}
+{#  <p><strong>First name:</strong> {{ author.first_name }}</p>#}
+{#  <p><strong>Last name:</strong> {{ author.last_name }}</p>#}
+{#  <p><strong>Email:</strong> {{ author.email }}</p>#}
+{#  <p><strong>Mob:</strong> {{ author.mobile_phone }}</p>#}
+{##}
+{#  #}
+{#{% endblock %}#}

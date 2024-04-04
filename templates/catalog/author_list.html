@@ -25,9 +25,9 @@
     </div>
   </header>
 <div class="card card-body shadow-xl mx-3 mx-md-4 mt-n6">
-  {% if author_list %}
+  {% if authors_with_offers %}
     <div class="row">
-      {% for author in author_list %}
+      {% for author in authors_with_offers %}
         <div class="col-md-6 mb-4">
           <div class="offer-card p-3 border rounded">
             <h3><a href="{% url 'catalog:author_detail' pk=author.id %}">{{ author.username }}</a></h3>
