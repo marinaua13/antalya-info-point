@@ -14,8 +14,8 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mx-auto my-auto">
-          <h1 class="text-white">Here you can find a lot of important service in Antalya</h1>
-          <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>
+{#          <h1 class="text-white">Here you can find a lot of important service in Antalya</h1>#}
+{#          <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>#}
         </div>
       </div>
     </div>
@@ -27,30 +27,30 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 mx-auto">
-                    <div class="mt-n8 mt-md-n9 text-center">
-                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tmb.jpg' %}"  loading="lazy">
-                    </div>
+{#                    <div class="mt-n8 mt-md-n9 text-center">#}
+{#                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tmb.jpg' %}"  loading="lazy">#}
+{#                    </div>#}
                     <div class="row py-5">
                         <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
                             <div class="d-flex justify-content-between align-items-center mb-2">
                                 <h3 class="mb-0">{{ offer.name }}</h3>
                             </div>
-                            <div>
-                                <h4><a href="{% url 'catalog:author_detail' pk=object.id %}"> Master</a></h4>
-                                <p>{{ offer.posted_by }}</p>
+                            <div style="display: flex;">
+                              <p style="margin-right: 10px;"> Master</p>
+                              <h6><a href="{% url 'catalog:author_detail' pk=object.id %}">{{ offer.posted_by }}</a></h6>
                             </div>
-                            <div>
-                                <h4>Price:</h4>
-                                <p>{{ offer.price }}</p>
+                             <div style="display: flex;">
+                              <p style="margin-right: 10px;">Price:</p>
+                              <h6>{{ offer.price }}</h6>
                             </div>
-                            <div>
-                                <h4>Company:</h4>
-                                <p>{{ offer.company }}</p>
+                            <div style="display: flex;">
+                              <p style="margin-right: 10px;">Company:</p>
+                              <h6>{{ offer.company }}</h6>
                             </div>
                             {% if offer.description %}
-                            <div>
-                                <h4>About:</h4>
-                                <p>{{ offer.description }}</p>
+                            <div style="display: flex;">
+                              <p style="margin-right: 10px;">About:</p>
+                              <h6>{{ offer.description }}</h6>
                             </div>
                             {% else %}
                             <div>
@@ -71,7 +71,8 @@
         <div class="col">
           <div class="card box-shadow-xl overflow-hidden mb-5">
             <div class="row">
-              <div class="col-lg-5 position-relative bg-cover px-0" style="background-image: url('{% static 'vector-comment-icon.jpg' %}')" loading="lazy">
+              <div class="col-lg-5 position-relative bg-cover px-0" 
+                   style="background-image: url('{% static 'img/vector-comment-icon.jpg' %}')" loading="lazy">
                 <div class="z-index-2 text-center d-flex h-100 w-100 d-flex m-auto justify-content-center">
                   <div class="mask bg-gradient-dark opacity-3"></div>
                   <div class="p-5 ps-sm-8 position-relative text-start my-auto z-index-2">
@@ -107,7 +108,7 @@
                       </div>
                       <div class="col-md-12 pe-2 mb-3">
                         <div class="input-group input-group-static mb-4">
-                          <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn btn-primary">Add Comment</a>
+                          <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn bg-gradient-secondary w-auto me-2">Add Comment</a>
 {#                          {% endif %}#}
                         </div>
                       </div>
