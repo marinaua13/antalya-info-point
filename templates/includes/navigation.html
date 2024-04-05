@@ -13,7 +13,7 @@
         <div class="d-flex mx-auto"> <!-- Змінено -->
               <form class="d-flex ml-auto" role="search" method="post" action="{% url 'catalog:search-offer' %}">
                   {% csrf_token %}
-                  <input class="form-control me-2" type="search" placeholder="Search Offer" aria-label="Search" name="searched">
+                  <input class="form-control me-2"  type="search" placeholder="Search Offer"   name="searched">
                   <input type="Submit" value="🔍" style="background: none; border: none;">
               </form>
           </div>
@@ -41,36 +41,6 @@
                     <h6 class="dropdown-header text-dark font-weight-bolder d-flex align-items-center px-1">
                       Content
                     </h6>
-                  
-{#                    {% if app_list %}#}
-{#                        {% for app in app_list %}#}
-{#                            {% if app.has_perms and not app.pinned %}#}
-{#                                <a href="{{ app.url }}" class="dropdown-item border-radius-md" data-bs-toggle="collapse" data-bs-target="#collapse-{{app.app_label}}" >#}
-{#                                  <span>{{ app.label|slice:10 }}{% if app.label|length > 10 %}..{% endif %}</span>#}
-{#                                </a>#}
-{##}
-{#                                {% if app.models %}#}
-{#                                  <div class="collapse" id="collapse-{{app.app_label}}">                                                                                                   #}
-{#                                    <ul class="flex-column nav">#}
-{#                                      {% for model in app.models %}#}
-{#                                        {% if model.url %}#}
-{#                                          <li class="nav-item{% if 'bootstrap-tables' in segment or model.url in request.path|urlencode %} active {% endif %} list-unstyled">#}
-{#                                            <a class="nav-link" href="{{ model.url }}">#}
-{#                                              <span class="ms-5 text-dark">{{ model.label }}</span>#}
-{#                                            </a>#}
-{#                                          </li>#}
-{#                                        {% else %}#}
-{#                                          <li class="nav-item list-unstyled">{{ model.label }}</li>#}
-{#                                        {% endif %}#}
-{#                                      {% endfor %}#}
-{#                                    </ul>#}
-{#                                  </div>#}
-{#                                {% endif %}#}
-{#                            {% endif %}#}
-{#                        {% endfor %}#}
-{#                    {% endif %}#}
-
-
                     <a href="{% url 'catalog:service-list' %}" class="dropdown-item border-radius-md">
                       <span>Services</span>
                     </a>
@@ -85,14 +55,20 @@
                     </h6>
 
                     {% if request.user.is_authenticated %}
-                      <a href="{{ request.user.get_absolute_url }}">{{ request.user.get_username }}</a>
+                        <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit" class="dropdown-item border-radius-md">
+        <span>Logout</span>
+    </button>
+</form>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
+                            <span>Login</span>
+                        </a>
+                        <a href="{% url 'catalog:register' %}" class="dropdown-item border-radius-md">
+                            <span>Register</span>
+                        </a>
                     {% endif %}
-                      <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
-                    <span>Login</span>
-                    </a>
-                <a href="{% url 'catalog:register' %}" class="dropdown-item border-radius-md">
-                    <span>Register</span>
-                </a>
               <li class="nav-item dropdown dropdown-hover mx-2">
                 <a class="nav-link ps-2 d-flex cursor-pointer align-items-center" id="dropdownMenuDocs"
                   data-bs-toggle="dropdown" aria-expanded="false">
