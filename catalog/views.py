@@ -28,7 +28,7 @@ class ServiceListView(LoginRequiredMixin, generic.ListView):
     model = Service
     template_name = "catalog/service_list.html"
     queryset = Service.objects.all()
-    paginate_by = 2
+    paginate_by = 4
 
 
 class ServiceDetailView(generic.DetailView):
@@ -41,6 +41,12 @@ class ServiceOfferListView(generic.ListView):
     model = Service
     template_name = "catalog/service_offers_list.html"
     context_object_name = "offers"
+    queryset = Offer.objects.select_related('posted_by')  # Вибираємо дані, пов'язані з майстрами
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['master_names'] = [offer.posted_by.username for offer in context['offers']]
+        return context
 
     def get_queryset(self):
         service_id = self.kwargs["service_id"]
@@ -56,15 +62,14 @@ class ServiceOfferListView(generic.ListView):
 class AuthorListView(generic.ListView):
     model = Author
     template_name = "catalog/author_list.html"
+    paginate_by = 2
 
     # context_object_name = 'author'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Отримання списку авторів, які мають пропозиції
-        context["authors_with_offers"] = Author.objects.filter(
-            offers__isnull=False
-        ).distinct()
+        context['authors_with_offers'] = Author.objects.filter(offers__isnull=False).distinct()
         return context
 
 
@@ -91,6 +96,7 @@ class OfferCreateList(LoginRequiredMixin, generic.CreateView):
     model = Offer
     fields = "__all__"
     success_url = reverse_lazy("catalog:offer-list")
+    template_name = "catalog/offer_create.html"
 
 
 class AuthorUpdateView(LoginRequiredMixin, generic.UpdateView):
