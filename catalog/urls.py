@@ -30,7 +30,8 @@ urlpatterns = [
     path("author/", AuthorListView.as_view(), name="author-list"),
     path("author/create/", AuthorCreateView.as_view(), name="author_create"),
     path("author/<int:pk>/update", AuthorUpdateView.as_view(), name="author-update"),
-    path("author/<int:pk>/", AuthorDetailView.as_view(), name="author_detail"),
+    path("author/<int:pk>/", AuthorDetailView.as_view(), name="author-detail"),
+
     path("offer/", OfferListView.as_view(), name="offer-list"),
     path("offer/<int:pk>/", OfferDetailView.as_view(), name="offer-detail"),
     path("offer/create/", OfferCreateList.as_view(), name="offer-create"),
