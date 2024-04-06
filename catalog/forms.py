@@ -57,7 +57,7 @@ class AuthorsForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(AuthorsForm, self).__init__(*args, **kwargs)
-        self.fields['picture'].widget.attrs.update({'class': 'form-control'})
+        self.fields['picture'].help_text = ''
 
     def clean_picture(self):
         picture = self.cleaned_data.get('picture')
