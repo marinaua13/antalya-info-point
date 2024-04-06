@@ -59,18 +59,10 @@ class ServiceOfferListView(generic.ListView):
         return context
 
 
-class AuthorListView(generic.ListView):
-    model = Author
-    template_name = "catalog/author_list.html"
-    paginate_by = 2
-
-    # context_object_name = 'author'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Отримання списку авторів, які мають пропозиції
-        context['authors_with_offers'] = Author.objects.filter(offers__isnull=False).distinct()
-        return context
+class ServiceCreateView(LoginRequiredMixin, generic.CreateView):
+    model = Service
+    fields = "__all__"
+    success_url = reverse_lazy("catalog:service-list")
 
 
 class OfferListView(generic.ListView):
@@ -83,13 +75,7 @@ class OfferListView(generic.ListView):
 class OfferDetailView(generic.DetailView):
     model = Offer
     template_name = "catalog/offer_detail.html"
-    context_object_name = "offer"
-
-
-class ServiceCreateView(LoginRequiredMixin, generic.CreateView):
-    model = Service
-    fields = "__all__"
-    success_url = reverse_lazy("catalog:service-list")
+    # context_object_name = "offer"
 
 
 class OfferCreateList(LoginRequiredMixin, generic.CreateView):
@@ -97,6 +83,18 @@ class OfferCreateList(LoginRequiredMixin, generic.CreateView):
     fields = "__all__"
     success_url = reverse_lazy("catalog:offer-list")
     template_name = "catalog/offer_create.html"
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    template_name = "catalog/author_list.html"
+    paginate_by = 4
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Отримання списку авторів, які мають пропозиції
+        context['authors_with_offers'] = Author.objects.filter(offers__isnull=False).distinct()
+        return context
 
 
 class AuthorUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -127,7 +125,7 @@ class AuthorDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         author = self.object
-        # Отримання пропозицій (offers) автора
+        # Отримання offers від автора
         offers = Offer.objects.filter(posted_by=author)
         context["offers"] = offers
         return context
@@ -170,23 +168,18 @@ def search_offer(request):
         return render(request, "catalog/offer_search.html", {})
 
 
-def info(request):
-    return render(
-        request,
-        "includes/info_general.html ",
-    )
-
-
 class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
     model = Offer
     template_name = "catalog/comment_create.html"
     form_class = CommentariesForm
-    success_url = reverse_lazy("catalog:offer-detail", kwargs={"pk": 1})
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         form.instance.offer = get_object_or_404(Offer, pk=self.kwargs["pk"])
         return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse_lazy("catalog:offer-detail", kwargs={"pk": self.object.offer.pk})
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -194,3 +187,7 @@ class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
         offers = self.get_object()
         context["user_offers"] = offers
         return context
+
+
+def info(request):
+    return render(request, "includes/info_general.html ")
