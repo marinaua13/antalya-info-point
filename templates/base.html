@@ -14,8 +14,6 @@
 <!-- Nucleo Icons -->
 <link href="{% static 'css/nucleo-icons.css' %}" rel="stylesheet" />
 <link href="{% static 'css/nucleo-svg.css' %}" rel="stylesheet" />
-<!-- Font Awesome Icons -->
-<script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
 <!-- Material Icons -->
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
 <!-- CSS Files -->
@@ -26,7 +24,7 @@
 
   {% block header %}
 
-    {% include 'includes/navigation.html' %}
+  {% include 'includes/navigation.html' %}
 
   {% endblock header %}
 
@@ -34,13 +32,9 @@
 
   {% block footer %}
   
-    {% include 'includes/footer_background.html' %}
+  {% include 'includes/footer_background.html' %}
 
   {% endblock footer %}
-
-  {% include 'includes/scripts.html' %}
-
-  {% block javascripts %}{% endblock javascripts %}
 
 </body>
 </html>
