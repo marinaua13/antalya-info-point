@@ -86,15 +86,13 @@ class OfferCreateList(LoginRequiredMixin, generic.CreateView):
 
 
 class AuthorListView(generic.ListView):
+    paginate_by = 6
     model = Author
     template_name = "catalog/author_list.html"
-    paginate_by = 4
+    context_object_name = 'authors_with_offers'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Отримання списку авторів, які мають пропозиції
-        context['authors_with_offers'] = Author.objects.filter(offers__isnull=False).distinct()
-        return context
+    def get_queryset(self):
+        return Author.objects.filter(offers__isnull=False).distinct()
 
 
 class AuthorUpdateView(LoginRequiredMixin, generic.UpdateView):
@@ -190,4 +188,8 @@ class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
 
 
 def info(request):
-    return render(request, "includes/info_general.html ")
+    return render(request, "includes/info_general.html")
+
+
+def canyons(request):
+    return render(request, "includes/canyons.html")
