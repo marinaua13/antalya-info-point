@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock title %}
+{% block body %} class="about-us bg-gray-200" {% endblock body %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<span class="mask bg-gradient-primary opacity-1"></span>
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+      <span class="mask bg-gradient-primary opacity-1"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-white">Here is important information that you should know...</h1>
+            <p class="lead mb-4 text-white opacity-8">
+              
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+  <!-- START Testimonials w/ user image & text & info -->
+  <section class="py-sm-2 py-5 position-relative">
+<body>
+    <div class="container">
+        <h1>General Information</h1>
+        <p>Ensuring the simultaneous application of national legislation and international law is important in terms of preventing human rights violations and creating a decent system for people. In this context, foreigners staying in our country have various rights and obligations. Within the framework of these rights and obligations, a residence permit forms the legal basis for the stay of foreigners in our country.</p>
+
+        <p>According to Law No. 6458 “On Foreigners and International Protection”, a residence permit refers to a document that allows you to stay in Turkey. Issued by the competent authorities, this document gives the right to foreign citizens to live in our country for a certain period of time and in a certain place. Important from the point of view of ensuring and maintaining public order, a residence permit is issued subject to the submission of an application by a foreign person, as well as the provision of all necessary documents related to the type of permit required to obtain this type of permit.</p>
+
+        <div class="contact-info">
+            <h2>MIGRATION SERVICE INFORMATION CENTER (YIMER 157):</h2>
+            <p>For all questions regarding residence permits for foreigners, detailed information can be obtained within 24 hours by contacting the Information Center for Foreigners at 157 within the country or at +90 312 157 11 22 outside the country. Additional information can be obtained from the telephone 24 hours a day.</p>
+        </div>
+            </div>
+</body>
+  </section>
+          </div>
+{% endblock %}
