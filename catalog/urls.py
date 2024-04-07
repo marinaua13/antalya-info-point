@@ -43,6 +43,7 @@ urlpatterns = [
     path("accounts/register/", views.register, name="register"),
     path("offer/search/", views.search_offer, name="search-offer"),
     path("info/", views.info, name="info"),
+    path("canyons/", views.canyons, name="canyons"),
 ]
 
 app_name = "catalog"
