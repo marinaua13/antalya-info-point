@@ -10,12 +10,12 @@
 {% block content %}
 <!-- -------- START HEADER 7 w/ text and video ------- -->
 <header class="bg-gradient-dark">
-  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door2.jpg' %}');">
+  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+    <span class="mask bg-gradient-primary opacity-2"></span>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mx-auto my-auto">
-{#          <h1 class="text-white">Here you can find a lot of important service in Antalya</h1>#}
-{#          <p class="lead mb-4 text-white opacity-8">We tried to collect the most necessary services that you may need when you came to Antalya for the first time.</p>#}
+          <h1 class="text-whites">You can choose an offer and find contact of master </h1>
         </div>
       </div>
     </div>
@@ -23,100 +23,76 @@
 </header>
 <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <!-- START Testimonials w/ user image & text & info -->
-    <section class="py-sm-7 py-5 position-relative">
+    <section class="py-sm-7 py-0 position-relative bg-cru">
         <div class="container">
-            <div class="row">
-                <div class="col-12 mx-auto">
-{#                    <div class="mt-n8 mt-md-n9 text-center">#}
-{#                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tmb.jpg' %}"  loading="lazy">#}
-{#                    </div>#}
-                    <div class="row py-5">
-                        <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h3 class="mb-0">{{ offer.name }}</h3>
-                            </div>
-                            <div style="display: flex;">
-                              <p style="margin-right: 10px;"> Master</p>
-                              <h6><a href="{% url 'catalog:author_detail' pk=object.id %}">{{ offer.posted_by }}</a></h6>
-                            </div>
-                             <div style="display: flex;">
-                              <p style="margin-right: 10px;">Price:</p>
-                              <h6>{{ offer.price }}</h6>
-                            </div>
-                            <div style="display: flex;">
-                              <p style="margin-right: 10px;">Company:</p>
-                              <h6>{{ offer.company }}</h6>
-                            </div>
-                            {% if offer.description %}
-                            <div style="display: flex;">
-                              <p style="margin-right: 10px;">About:</p>
-                              <h6>{{ offer.description }}</h6>
-                            </div>
-                            {% else %}
-                            <div>
-                                <p>🌺 🌺 🌺</p>
-                            </div>
-                            {% endif %}
-                        </div>
+          <div class="col-12 mx-auto">
+            <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="mb-0">{{ offer.name }}</h3> 
+                <a href="{% url 'catalog:offer-list' %}" class="btn bg-gradient-secondary w-auto me-2">Back to Offers</a>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;"> Master</p>
+               <h6>{{ offer.posted_by }}</h6>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;"> Mobile:</p>
+                <h6>{{ offer.posted_by.mobile_phone }}</h6>
+              </div>
+               <div style="display: flex;">
+                <p style="margin-right: 10px;">Price:</p>
+                <h6>{{ offer.price }}</h6>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;">Company:</p>
+                <h6>{{ offer.company }}</h6>
+              </div>
+              {% if offer.description %}
+              <div style="display: flex;">
+                <p style="margin-right: 10px;">About:</p>
+                <h6>{{ offer.description }}</h6>
+              </div>
+              {% else %}
+              <div>
+                  <p>🌺 🌺 🌺</p>
+              </div>
+              {% endif %}
+            
+<hr style="background-color: #1f2937; height: 3px; border: none;">
+                        
+              <form  id="contact-form" method="post">
+                <div class="card-body pt-1">
+                  <div class="row">
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4"></div>
                     </div>
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4">
+                      <p><strong>Comments:</strong></p>
+                      <ul>
+                        {% if not offer.commentaries.all %}
+                          <p>No Comments Yet... </p>
+                        {% endif %}
+                        {% for comment in offer.commentaries.all %}
+                          <li>
+                            <strong>{{ comment.created_time }}</strong><br>
+                            {{ comment.user }}: {{ comment.content }}
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4">
+                        <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn bg-gradient-secondary w-auto me-2">Add Comment</a>
+                      </div>
+                    </div>
+                  </div>
                 </div>
+              </form>
             </div>
+          </div>
         </div>
     </section>
 </div>
-  </div>
-   <section class="py-lg-5">
-    <div class="container">
-      <div class="row">
-        <div class="col">
-          <div class="card box-shadow-xl overflow-hidden mb-5">
-            <div class="row">
-              <div class="col-lg-5 position-relative bg-cover px-0" 
-                   style="background-image: url('{% static 'img/vector-comment-icon.jpg' %}')" loading="lazy">
-                <div class="z-index-2 text-center d-flex h-100 w-100 d-flex m-auto justify-content-center">
-                  <div class="mask bg-gradient-dark opacity-3"></div>
-                  <div class="p-5 ps-sm-8 position-relative text-start my-auto z-index-2">
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-7">
-                <form class="p-3" id="contact-form" method="post">
-                  <div class="card-header px-4 py-sm-5 py-3">
-                    <h2>Hello!</h2>
-                    <p class="lead"> We would be very happy if you could leave your comments on any occasion</p>
-                  </div>
-                  <div class="card-body pt-1">
-                    <div class="row">
-                      <div class="col-md-12 pe-2 mb-3">
-                        <div class="input-group input-group-static mb-4">
-{#                          {% if not offer.commentaries.all %}#}
-{#                            <p>No Comments Yet... <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}">Add Comment</a></p>#}
-{#                          {% else %}#}
-                            <p><strong>Comments:</strong></p>
-                        </div>
-                      </div>
-                      <div class="col-md-12 pe-2 mb-3">
-                        <div class="input-group input-group-static mb-4">
-                          <ul>
-                              {% for comment in offer.commentaries.all %}
-                                <li>
-                                  <strong>{{ comment.created_time }}</strong><br>
-                                  {{ comment.user }}: {{ comment.content }}
-                                </li>
-                              {% endfor %}
-                        </div>
-                      </div>
-                      <div class="col-md-12 pe-2 mb-3">
-                        <div class="input-group input-group-static mb-4">
-                          <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn bg-gradient-secondary w-auto me-2">Add Comment</a>
-{#                          {% endif %}#}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-  </section>
 {% endblock content %}

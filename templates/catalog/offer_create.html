@@ -11,16 +11,14 @@
 
 <div class="page-header align-items-start min-vh-100" style="background-image: url('{% static 'img/door2.jpg' %}');" loading="lazy">
     <span class="mask bg-gradient-dark opacity-6"></span>
-    <div class="container my-auto">
+    <div class="container my-auto mt-6 mb-6">
         <div class="row">
             <div class="col-lg-4 col-md-8 col-12 mx-auto">
                 <div class="card z-index-0 fadeIn3 fadeInBottom">
                     <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
-                            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">{{ object|yesno:"Update,Create" }}</h4>
+                            <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">{{ object|yesno:"Update,Create" }} offer</h4>
                             <div class="row mt-3">
-                                
-                                
                             </div>
                         </div>
                     </div>
@@ -28,11 +26,11 @@
                         <form method="post" enctype="multipart/form-data">
                             {% csrf_token %}
                             {{ form.as_p }}
-                                <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit">Create</button>
-                            </div>
-                          </div>
-                            </fieldset>
-                        </form>
+                              <button class="btn bg-gradient-primary w-100 my-4 mb-2" type="submit">Create</button>
+                          <button class="btn bg-gradient-primary w-100 my-4 mb-2">
+                          <a href="{% url 'catalog:index' %}" class="text-white">Back to main</a>
+                          </button>
+                        </form>                    
                     </div>
                 </div>
             </div>
@@ -40,16 +38,3 @@
     </div>
 </div>
 {% endblock content %}
-
-{#{% extends "base.html" %}#}
-{#{% load crispy_forms_filters %}#}
-{##}
-{#{% block content %}#}
-{#  <h1>{{ object|yesno:"Update,Create" }} offer</h1>#}
-{#  <form action="" method="post" novalidate>#}
-{#    {% csrf_token %}#}
-{#    {{ form|crispy }}#}
-{##}
-{#    <input type="submit" value="Submit" class="btn btn-primary">#}
-{#  </form>#}
-{#{% endblock %}#}

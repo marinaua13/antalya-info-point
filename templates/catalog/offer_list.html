@@ -15,11 +15,11 @@
   <!-- -------- START HEADER 7 w/ text and video ------- -->
   <header class="bg-gradient-dark">
     <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
-      <span class="mask bg-gradient-primary opacity-1"></span>
+      <span class="mask bg-gradient-primary opacity-2"></span>
       <div class="container">
         <div class="row justify-content-center">
           <div class="col-lg-8 text-center mx-auto my-auto">
-            <h1 class="text-white">Here you can find a lot of offers in Antalya</h1>
+            <h1 class="text-whites">Here you can find a lot of offers in Antalya</h1>
             <p class="lead mb-4 text-white opacity-8">Here you will find an offer from our specialists</p>   
             <button type="submit" class="btn bg-white text-dark">
               <a href="{% url 'catalog:offer-create' %}"> Create Offer</a></button>
@@ -33,7 +33,7 @@
     <div class="row">
       {% for offer in offer_list %}
         <div class="col-md-6 mb-4">
-          <div class="offer-card p-3 border rounded">
+          <div class="offer-card p-3 border rounded bg-cru">
             <h3><a href="{% url 'catalog:offer-detail' pk=offer.id %}">{{ offer.name }}</a></h3>
             <p>{{ offer.description }}</p>
           </div>
@@ -49,27 +49,28 @@
     <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
         <ul class="pagination mb-0">
             {% if page_obj.has_previous %}
-                <li class="page-item">
-                    <a class="page-link" href="?page=1"><span>First</span></a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
-                </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page=1"><span>First</span></a>
+              </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+              </li>
             {% endif %}
 
             <li class="page-item">
-                <span class="page-link">{{ page_obj.number }}</span>
+              <span class="page-link">{{ page_obj.number }}</span>
             </li>
 
             {% if page_obj.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-                </li>
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
-                </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+              </li>
+              <li class="page-item">
+                  <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+              </li>
             {% endif %}
         </ul>
-    </div>
 {% endif %}
+</div>
+</div>
 {% endblock %}

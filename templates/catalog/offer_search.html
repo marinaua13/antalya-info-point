@@ -11,6 +11,7 @@
 <!-- -------- START HEADER 7 w/ text and video ------- -->
 <header class="bg-gradient-dark">
   <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door2.jpg' %}');">
+    <span class="mask bg-gradient-primary opacity-2"></span>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 text-center mx-auto my-auto">
@@ -22,30 +23,30 @@
 </header>
 <div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
     <!-- START Testimonials w/ user image & text & info -->
-    <section class="py-sm-7 py-5 position-relative">
+    <section class="py-sm-7 py-5 position-relative bg-cru">
         <div class="container">
             <div class="row">
-              <div class="row py-5">
+              <div class="row py-0">
                   <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
                       <div class="d-flex justify-content-between align-items-center mb-2">
-                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'default_image.jpg' %}" alt="Default Picture" class="img-fluid rounded-circle">
+                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tureye.jpg' %}" class="img-fluid rounded-circle">
                       </div>
-                        {% if searched %}
-                          <h3 class="mb-0">You found {{ searched }}...</h3>
-                          <hr>
-                          {% for offer in offers %}
-                            <div style="display: flex;">
-                              <p style="margin-right: 10px;">offer name and specialist:</p>
-                              <h6><a href="{% url "catalog:offer-detail" pk=offer.id %} "> {{ offer }}</a></h6>
-                            </div>
-                          {% endfor %}
-                          {% else %}
-                            <h1>Hey You forgot to search....</h1>
-                            {% endif %}
-                    </div>
+                      {% if searched %}
+                        <h3 class="mb-0">You found {{ searched }}...</h3>
+                        <hr>
+                        {% for offer in offers %}
+                          <div style="display: flex;">
+                            <p style="margin-right: 10px;">offer name and specialist:</p>
+                            <h6><a href="{% url "catalog:offer-detail" pk=offer.id %} "> {{ offer }}</a></h6>
+                          </div>
+                        {% endfor %}
+                        {% else %}
+                          <h4>please enter your search request....</h4>
+                      {% endif %}
+                  </div>
               </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+</div>
 {% endblock content %}
