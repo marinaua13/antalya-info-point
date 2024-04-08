@@ -7,7 +7,7 @@
 
 {% block content %}
 
-</div></div></div>
+
 <header class="header-2">
   <div class="page-header min-vh-75 relative" style="background-image: url('{% static 'img/wall.jpg' %}')">
     <span class="mask bg-gradient-primary opacity-1"></span>
@@ -18,7 +18,6 @@
           <p class="lead text-white mt-3">
             Here you will find important, necessary, interesting offers for the city of Antalya.
             <br/>
-{#            Here you will find important, necessary, interesting offers for the city of Antalya. #}
           </p>
         </div>
       </div>
@@ -95,7 +94,7 @@
           <div class="col-md-6">
             <div class="info">
               <i class="material-icons text-gradient text-primary text-3xl">content_copy</i>
-              <h5 class="font-weight-bolder mt-3"><a href="#">Antalya beaches</a></h5>
+              <h5 class="font-weight-bolder mt-3"><a href="{% url 'catalog:beaches' %}">Antalya beaches</a></h5>
               <p class="pe-3">The beaches of Antalya and the surrounding area are very diverse and differ from each other in many ways. In some places you will find solitude with nature, in others - round-the-clock fun and noise..</p>
             </div>
           </div>
@@ -103,13 +102,13 @@
         <div class="row justify-content-start mt-5">
           <div class="col-md-6 mt-3">
             <i class="material-icons text-gradient text-primary text-3xl">content_copy</i>
-            <h5 class="font-weight-bolder mt-3"><a href="#">Warm springs of Antalya</a></h5>
+            <h5 class="font-weight-bolder mt-3"><a href="{% url 'catalog:springs' %}">Warm springs of Antalya</a></h5>
             <p class="pe-5">There are 17 thermal resorts in Turkey. Wellness holidays are becoming increasingly popular among foreign tourists of all ages coming to this Asian country...</p>
           </div>
           <div class="col-md-6 mt-3">
             <div class="info">
               <i class="material-icons text-gradient text-primary text-3xl">content_copy</i>
-              <h5 class="font-weight-bolder mt-3"><a href="#">Hamam in Antalya</a></h5>
+              <h5 class="font-weight-bolder mt-3"><a href="{% url 'catalog:hamam' %}">Hamam in Antalya</a></h5>
               <p class="pe-3">Hamam in Antalya is not just a sauna, it is a real part of Turkish culture, a tradition that goes back many hundreds of years.</p>
             </div>
           </div>
