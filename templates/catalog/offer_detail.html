@@ -76,7 +76,7 @@
                         {% for comment in offer.commentaries.all %}
                           <li>
                             <strong>{{ comment.created_time }}</strong><br>
-                            {{ comment.user }}: {{ comment.content }}
+                            {{ comment.user }}:<a href="{% url 'catalog:comment-detail' pk=comment.id %}">  {{ comment.content }}</a>
                           </li>
                         {% endfor %}
                       </ul>
