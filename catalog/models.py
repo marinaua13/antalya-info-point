@@ -8,10 +8,6 @@ class Author(AbstractUser):
     mobile_phone = models.CharField(max_length=20, blank=True, null=True)
     picture = models.ImageField(upload_to="authors_pictures", null=True, blank=True)
 
-    # class Meta:
-    #     model = Author
-    #     fields = ['mobile_phone', 'picture']
-
 
 class Service(models.Model):
     name = models.CharField(max_length=256, unique=True)
@@ -62,7 +58,7 @@ class Company(models.Model):
         verbose_name_plural = "Companies"
 
     def __str__(self):
-        return f"{self.name} - {self.opening_year}"
+        return f"{self.name} from {self.opening_year}"
 
 
 class Commentary(models.Model):
