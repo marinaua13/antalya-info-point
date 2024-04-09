@@ -56,11 +56,11 @@
 
                     {% if request.user.is_authenticated %}
                         <form action="{% url 'logout' %}" method="post">
-    {% csrf_token %}
-    <button type="submit" class="dropdown-item border-radius-md">
-        <span>Logout</span>
-    </button>
-</form>
+                          {% csrf_token %}
+                          <button type="submit" class="dropdown-item border-radius-md">
+                              <span>Logout</span>
+                          </button>
+                        </form>
                     {% else %}
                         <a href="{% url 'login' %}" class="dropdown-item border-radius-md">
                             <span>Login</span>
@@ -176,23 +176,14 @@
                   <form action="{% url 'logout' %}" method="post">
                         {% csrf_token %}
                         <button type="submit" class="dropdown-item border-radius-md">Logout</button>
-                    </form>
-                </a>
-              </li>
-              {% else %}
-              <li class="nav-item ms-lg-auto">
-                <a class="nav-link nav-link-icon me-2" href="{% url 'login' %}">
-                  <i class="fa fa-sign-in me-1"></i>
-                  <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Logout">Logout</p>
+                  </form>
                 </a>
               </li>
               {% endif %}
-{#              <li class="nav-item my-auto ms-3 ms-lg-0">#}
-{#                <a href="https://appseed.us/product/material-kit/django/" target="_blank"#}
-{#                   class="btn btn-sm  bg-gradient-primary  mb-0 me-1 mt-2 mt-md-0">Download</a>#}
-{#              </li>#}
+            </div>
+      </div>
             </ul>
+          
           </div>
         </div>
       </nav>
