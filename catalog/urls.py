@@ -15,6 +15,9 @@ from catalog.views import (
     ServiceOfferListView,
     AddCommentCreateView,
     AuthorUpdateView,
+    CommentaryDeleteView,
+    CommentaryUpdateView,
+    CommentaryDetailView,
 )
 
 urlpatterns = [
@@ -36,14 +39,24 @@ urlpatterns = [
     path("offer/<int:pk>/", OfferDetailView.as_view(), name="offer-detail"),
     path("offer/create/", OfferCreateList.as_view(), name="offer-create"),
     path(
-        "offer/<int:pk>/commentary",
+        "offer/<int:pk>/commentary/",
         AddCommentCreateView.as_view(),
         name="offer-comment-create",
     ),
+    path("commentary/<int:pk>/delete/", CommentaryDeleteView.as_view(), name="commentary-delete"),
+    path("commentary/<int:pk>/", CommentaryDetailView.as_view(), name="comment-detail"),
+    path("commentary/<int:pk>/update/", CommentaryUpdateView.as_view(), name="commentary-update"),
     path("accounts/register/", views.register, name="register"),
     path("offer/search/", views.search_offer, name="search-offer"),
     path("info/", views.info, name="info"),
+    path("car/", views.cars, name="cars"),
+    path("insurance/", views.insurance, name="insurance"),
+    path("hospital/", views.hospital, name="hospital"),
+    path("custom/", views.custom, name="custom"),
     path("canyons/", views.canyons, name="canyons"),
+    path("springs/", views.springs, name="springs"),
+    path("beaches/", views.beaches, name="beaches"),
+    path("hamam/", views.hamam, name="hamam"),
 ]
 
 app_name = "catalog"
