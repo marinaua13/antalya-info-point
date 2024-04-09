@@ -1,16 +1,14 @@
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
 
 from catalog.forms import AuthorsForm, UserRegistrationForm, CommentariesForm
-from catalog.models import Author, Offer, Service
+from catalog.models import Author, Offer, Service, Commentary
 
 
-@login_required
 def index(request: HttpRequest) -> HttpResponse:
     num_authors = Author.objects.count()
     num_offers = Offer.objects.count()
@@ -24,7 +22,7 @@ def index(request: HttpRequest) -> HttpResponse:
     return render(request, "catalog/index.html", context=context)
 
 
-class ServiceListView(LoginRequiredMixin, generic.ListView):
+class ServiceListView(generic.ListView):
     model = Service
     template_name = "catalog/service_list.html"
     queryset = Service.objects.all()
@@ -187,9 +185,77 @@ class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
         return context
 
 
+class CommentaryDetailView(LoginRequiredMixin, generic.DetailView):
+    model = Commentary
+    template_name = 'catalog/comment_detail.html'
+
+
+class CommentaryDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Commentary
+    success_url = reverse_lazy('catalog:offer-detail')
+    template_name = 'catalog/comment_confirm_delete.html'
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:offer-detail', kwargs={'pk': self.object.offer.pk})  # Повернення на сторінку деталей пропозиції після видалення коментаря
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        if self.object.user != self.request.user:  # Перевірка, чи поточний користувач є автором коментаря
+            return HttpResponseForbidden(render(request, 'catalog/forbidden.html'))
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["comment"] = self.object
+        return context
+
+
+class CommentaryUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Commentary
+    form_class = CommentariesForm
+    template_name = 'catalog/comment_update.html'
+
+    def get_success_url(self):
+        return reverse_lazy('catalog:offer-detail', kwargs={'pk': self.object.offer.pk})
+
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != self.request.user:  # Перевірка, чи поточний користувач є автором коментаря
+            return HttpResponseForbidden(render(request, 'catalog/forbidden.html'))  # Якщо не є, перенаправити на сторінку списку коментарів
+        return super().dispatch(request, *args, **kwargs)
+
+
 def info(request):
     return render(request, "includes/info_general.html")
 
 
+def cars(request):
+    return render(request, "includes/cars.html")
+
+
+def insurance(request):
+    return render(request, "includes/insurance.html")
+
+
+def hospital(request):
+    return render(request, "includes/hospital.html")
+
+
+def custom(request):
+    return render(request, "includes/custom.html")
+
+
 def canyons(request):
     return render(request, "includes/canyons.html")
+
+
+def springs(request):
+    return render(request, "includes/springs.html")
+
+
+def beaches(request):
+    return render(request, "includes/beaches.html")
+
+
+def hamam(request):
+    return render(request, "includes/hamam.html")
