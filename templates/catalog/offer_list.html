@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load query_transform %}
 
 {% block title %} Offer page {% endblock title %}
 {% block body %} class="about-us bg-gray-200" {% endblock body %}
@@ -53,7 +54,7 @@
                   <a class="page-link" href="?page=1"><span>First</span></a>
               </li>
               <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                  <a class="page-link" href="?{% query_transform request page=page_obj.previous_page_number %}">Prev</a>
               </li>
             {% endif %}
 
@@ -63,7 +64,7 @@
 
             {% if page_obj.has_next %}
               <li class="page-item">
-                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  <a class="page-link" href="?{% query_transform request page=page_obj.next_page_number %}">Next</a>
               </li>
               <li class="page-item">
                   <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
