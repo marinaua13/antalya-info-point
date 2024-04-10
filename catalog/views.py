@@ -257,5 +257,5 @@ def beaches(request):
     return render(request, "includes/beaches.html")
 
 
-def hamam(request):
-    return render(request, "includes/hamam.html")
+def hammam(request):
+    return render(request, "includes/hammam.html")
