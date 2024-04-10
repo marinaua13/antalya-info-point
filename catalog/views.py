@@ -41,7 +41,7 @@ class ServiceOfferListView(generic.ListView):
     context_object_name = "offers"
     queryset = Offer.objects.select_related(
         "posted_by"
-    )  # Вибираємо дані, пов'язані з майстрами
+    )
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -77,7 +77,6 @@ class OfferListView(generic.ListView):
 class OfferDetailView(generic.DetailView):
     model = Offer
     template_name = "catalog/offer_detail.html"
-    # context_object_name = "offer"
 
 
 class OfferCreateList(LoginRequiredMixin, generic.CreateView):
@@ -125,7 +124,6 @@ class AuthorDetailView(generic.DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         author = self.object
-        # Отримання offers від автора
         offers = Offer.objects.filter(posted_by=author)
         context["offers"] = offers
         return context
@@ -202,13 +200,13 @@ class CommentaryDeleteView(LoginRequiredMixin, generic.DeleteView):
     def get_success_url(self):
         return reverse_lazy(
             "catalog:offer-detail", kwargs={"pk": self.object.offer.pk}
-        )  # Повернення на сторінку деталей пропозиції після видалення коментаря
+        )
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
         if (
             self.object.user != self.request.user
-        ):  # Перевірка, чи поточний користувач є автором коментаря
+        ):
             return HttpResponseForbidden(render(request, "catalog/forbidden.html"))
         return super().dispatch(request, *args, **kwargs)
 
@@ -230,10 +228,10 @@ class CommentaryUpdateView(LoginRequiredMixin, generic.UpdateView):
         obj = self.get_object()
         if (
             obj.user != self.request.user
-        ):  # Перевірка, чи поточний користувач є автором коментаря
+        ):
             return HttpResponseForbidden(
                 render(request, "catalog/forbidden.html")
-            )  # Якщо не є, перенаправити на сторінку списку коментарів
+            )
         return super().dispatch(request, *args, **kwargs)
 
 
