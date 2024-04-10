@@ -39,11 +39,15 @@ class ServiceOfferListView(generic.ListView):
     model = Service
     template_name = "catalog/service_offers_list.html"
     context_object_name = "offers"
-    queryset = Offer.objects.select_related('posted_by')  # Вибираємо дані, пов'язані з майстрами
+    queryset = Offer.objects.select_related(
+        "posted_by"
+    )  # Вибираємо дані, пов'язані з майстрами
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['master_names'] = [offer.posted_by.username for offer in context['offers']]
+        context["master_names"] = [
+            offer.posted_by.username for offer in context["offers"]
+        ]
         return context
 
     def get_queryset(self):
@@ -87,7 +91,7 @@ class AuthorListView(generic.ListView):
     paginate_by = 6
     model = Author
     template_name = "catalog/author_list.html"
-    context_object_name = 'authors_with_offers'
+    context_object_name = "authors_with_offers"
 
     def get_queryset(self):
         return Author.objects.filter(offers__isnull=False).distinct()
@@ -187,21 +191,25 @@ class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
 
 class CommentaryDetailView(LoginRequiredMixin, generic.DetailView):
     model = Commentary
-    template_name = 'catalog/comment_detail.html'
+    template_name = "catalog/comment_detail.html"
 
 
 class CommentaryDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Commentary
-    success_url = reverse_lazy('catalog:offer-detail')
-    template_name = 'catalog/comment_confirm_delete.html'
+    success_url = reverse_lazy("catalog:offer-detail")
+    template_name = "catalog/comment_confirm_delete.html"
 
     def get_success_url(self):
-        return reverse_lazy('catalog:offer-detail', kwargs={'pk': self.object.offer.pk})  # Повернення на сторінку деталей пропозиції після видалення коментаря
+        return reverse_lazy(
+            "catalog:offer-detail", kwargs={"pk": self.object.offer.pk}
+        )  # Повернення на сторінку деталей пропозиції після видалення коментаря
 
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if self.object.user != self.request.user:  # Перевірка, чи поточний користувач є автором коментаря
-            return HttpResponseForbidden(render(request, 'catalog/forbidden.html'))
+        if (
+            self.object.user != self.request.user
+        ):  # Перевірка, чи поточний користувач є автором коментаря
+            return HttpResponseForbidden(render(request, "catalog/forbidden.html"))
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -213,15 +221,19 @@ class CommentaryDeleteView(LoginRequiredMixin, generic.DeleteView):
 class CommentaryUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Commentary
     form_class = CommentariesForm
-    template_name = 'catalog/comment_update.html'
+    template_name = "catalog/comment_update.html"
 
     def get_success_url(self):
-        return reverse_lazy('catalog:offer-detail', kwargs={'pk': self.object.offer.pk})
+        return reverse_lazy("catalog:offer-detail", kwargs={"pk": self.object.offer.pk})
 
     def dispatch(self, request, *args, **kwargs):
         obj = self.get_object()
-        if obj.user != self.request.user:  # Перевірка, чи поточний користувач є автором коментаря
-            return HttpResponseForbidden(render(request, 'catalog/forbidden.html'))  # Якщо не є, перенаправити на сторінку списку коментарів
+        if (
+            obj.user != self.request.user
+        ):  # Перевірка, чи поточний користувач є автором коментаря
+            return HttpResponseForbidden(
+                render(request, "catalog/forbidden.html")
+            )  # Якщо не є, перенаправити на сторінку списку коментарів
         return super().dispatch(request, *args, **kwargs)
 
 

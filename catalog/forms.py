@@ -17,21 +17,21 @@ class UserRegistrationForm(UserCreationForm):
             "email",
             "password1",
             "password2",
-            "picture"
+            "picture",
         ]
 
     def clean_picture(self):
-        picture = self.cleaned_data.get('picture')
+        picture = self.cleaned_data.get("picture")
         if picture:
             if picture.size > 10 * 1024 * 1024:
-                raise forms.ValidationError("Фотографія занадто велика. Максимальний розмір - 10MB.")
+                raise forms.ValidationError("Photo too large")
         return picture
 
     def save(self, commit=True):
         author = super(UserRegistrationForm, self).save(commit=False)
         author.email = self.cleaned_data["email"]
-        if 'picture' in self.cleaned_data:
-            author.picture = self.cleaned_data['picture']
+        if "picture" in self.cleaned_data:
+            author.picture = self.cleaned_data["picture"]
         if commit:
             author.save()
         print(author.picture)
@@ -49,20 +49,15 @@ class AuthorsForm(forms.ModelForm):
 
     class Meta:
         model = Author
-        fields = ["email",
-                  "mobile_phone",
-                  "years_of_experience",
-                  "picture"
-                  ]
+        fields = ["email", "mobile_phone", "years_of_experience", "picture"]
 
     def __init__(self, *args, **kwargs):
         super(AuthorsForm, self).__init__(*args, **kwargs)
-        self.fields['picture'].help_text = ''
+        self.fields["picture"].help_text = ""
 
     def clean_picture(self):
-        picture = self.cleaned_data.get('picture')
+        picture = self.cleaned_data.get("picture")
         if picture:
             if picture.size > 10 * 1024 * 1024:
-                raise forms.ValidationError("Фотографія занадто велика. Максимальний розмір - 10MB.")
+                raise forms.ValidationError("Photo too large")
         return picture
-

@@ -6,9 +6,16 @@ from catalog.models import Author, Service, Offer, Commentary, Company
 
 @admin.register(Author)
 class AuthorAdmin(UserAdmin):
-    list_display = UserAdmin.list_display + ("years_of_experience", "mobile_phone", "picture",)
+    list_display = UserAdmin.list_display + (
+        "years_of_experience",
+        "mobile_phone",
+        "picture",
+    )
     fieldsets = UserAdmin.fieldsets + (
-        ("Additional Info", {"fields": ("years_of_experience", "mobile_phone", "picture")}),
+        (
+            "Additional Info",
+            {"fields": ("years_of_experience", "mobile_phone", "picture")},
+        ),
     )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
@@ -19,7 +26,7 @@ class AuthorAdmin(UserAdmin):
                     "last_name",
                     "years_of_experience",
                     "mobile_phone",
-                    "picture"
+                    "picture",
                 )
             },
         ),

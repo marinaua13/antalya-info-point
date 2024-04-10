@@ -34,7 +34,6 @@ urlpatterns = [
     path("author/create/", AuthorCreateView.as_view(), name="author_create"),
     path("author/<int:pk>/update", AuthorUpdateView.as_view(), name="author-update"),
     path("author/<int:pk>/", AuthorDetailView.as_view(), name="author-detail"),
-
     path("offer/", OfferListView.as_view(), name="offer-list"),
     path("offer/<int:pk>/", OfferDetailView.as_view(), name="offer-detail"),
     path("offer/create/", OfferCreateList.as_view(), name="offer-create"),
@@ -43,9 +42,17 @@ urlpatterns = [
         AddCommentCreateView.as_view(),
         name="offer-comment-create",
     ),
-    path("commentary/<int:pk>/delete/", CommentaryDeleteView.as_view(), name="commentary-delete"),
+    path(
+        "commentary/<int:pk>/delete/",
+        CommentaryDeleteView.as_view(),
+        name="commentary-delete",
+    ),
     path("commentary/<int:pk>/", CommentaryDetailView.as_view(), name="comment-detail"),
-    path("commentary/<int:pk>/update/", CommentaryUpdateView.as_view(), name="commentary-update"),
+    path(
+        "commentary/<int:pk>/update/",
+        CommentaryUpdateView.as_view(),
+        name="commentary-update",
+    ),
     path("accounts/register/", views.register, name="register"),
     path("offer/search/", views.search_offer, name="search-offer"),
     path("info/", views.info, name="info"),
