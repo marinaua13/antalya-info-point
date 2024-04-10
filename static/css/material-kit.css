@@ -69,8 +69,8 @@
   --bs-border-radius-2xl: 1rem;
   --bs-border-radius-pill: 50rem;
   --bs-heading-color: #344767;
-  --bs-link-color: #e91e63;
-  --bs-link-hover-color: #e91e63;
+  --bs-link-color: #1ee8e8;
+  --bs-link-hover-color: #869e0e;
   --bs-code-color: #d63384;
   --bs-highlight-bg: #fcf8e3;
 }
@@ -10539,6 +10539,10 @@ fieldset:disabled .btn {
 
 .text-light {
   color: #f0f2f5 !important;
+  -webkit-text-stroke: 1px black;
+}
+.text-cru {
+  color: #eac392 !important;
 }
 
 .text-dark {
@@ -10547,6 +10551,11 @@ fieldset:disabled .btn {
 
 .text-white {
   color: #fff !important;
+
+}
+.text-whites {
+  color: #fff !important;
+  -webkit-text-stroke: 1px black;
 }
 
 .text-body {
@@ -10623,6 +10632,10 @@ fieldset:disabled .btn {
 
 .bg-white {
   background-color: #fff !important;
+}
+
+.bg-cru {
+  background-color: #f8ecdd !important;
 }
 
 .bg-body {
@@ -10803,7 +10816,7 @@ fieldset:disabled .btn {
 }
 
 .shadow-primary {
-  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(233, 30, 99, 0.4) !important;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.14), 0 7px 10px -5px rgba(40, 98, 30, 0.4) !important;
 }
 
 .shadow-secondary {
@@ -16054,8 +16067,8 @@ fieldset:disabled .btn {
   }
 
   .py-lg-5 {
-    padding-top: 3rem !important;
-    padding-bottom: 3rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
   }
 
   .py-lg-6 {
@@ -20460,14 +20473,14 @@ fieldset:disabled .btn {
 
 .btn-primary,
 .btn.bg-gradient-primary {
-  box-shadow: 0 3px 3px 0 rgba(233, 30, 99, 0.15), 0 3px 1px -2px rgba(233, 30, 99, 0.2), 0 1px 5px 0 rgba(233, 30, 99, 0.15);
+  box-shadow: 0 3px 3px 0 rgba(40, 98, 30, 0.4), 0 3px 1px -2px rgba(63, 124, 12, 0.2), 0 1px 5px 0 rgba(63, 124, 12, 0.2);
 }
 
 .btn-primary:hover,
 .btn.bg-gradient-primary:hover {
-  background-color: #e91e63;
-  border-color: #e91e63;
-  box-shadow: 0 14px 26px -12px rgba(233, 30, 99, 0.4), 0 4px 23px 0 rgba(233, 30, 99, 0.15), 0 8px 10px -5px rgba(233, 30, 99, 0.2);
+  background-color: #587315;
+  border-color: #587315;
+  box-shadow: 0 14px 26px -12px rgb(88, 115, 21), 0 4px 23px 0 rgb(88, 115, 21), 0 8px 10px -5px rgb(88, 115, 21);
 }
 
 .btn-primary .btn.bg-outline-primary,
@@ -21251,8 +21264,8 @@ fieldset:disabled .btn {
   top: 0;
   content: "";
   border-radius: 0.5rem;
-  background-image: linear-gradient(195deg, #EC407A, #D81B60);
-  opacity: .85;
+  background-image: linear-gradient(195deg, #eee09c, #eddf9b);
+  opacity: .45;
 }
 
 .rotating-card-container .card .front {
@@ -22530,7 +22543,7 @@ label,
 }
 
 .bg-gradient-primary {
-  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+  background-image: linear-gradient(195deg, #869e0e 0%, #869e0e 100%);
 }
 
 .bg-gradient-secondary {
@@ -23125,7 +23138,7 @@ hr.horizontal.gray-light {
   left: 0;
   width: 100%;
   height: 100%;
-  opacity: 0.8;
+  opacity: 0.5;
 }
 
 .cursor-pointer {
@@ -25937,7 +25950,7 @@ p {
 }
 
 .text-gradient.text-primary {
-  background-image: linear-gradient(195deg, #EC407A, #D81B60);
+  background-image: linear-gradient(195deg, #e8ad16, #e7ac16);
 }
 
 .text-gradient.text-info {
