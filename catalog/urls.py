@@ -56,7 +56,7 @@ urlpatterns = [
     path("canyons/", views.canyons, name="canyons"),
     path("springs/", views.springs, name="springs"),
     path("beaches/", views.beaches, name="beaches"),
-    path("hamam/", views.hamam, name="hamam"),
+    path("hammam/", views.hamam, name="hammam"),
 ]
 
 app_name = "catalog"
