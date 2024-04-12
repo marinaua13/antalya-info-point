@@ -31,18 +31,22 @@
                       <div class="d-flex justify-content-between align-items-center mb-2">
                         <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/tureye.jpg' %}" class="img-fluid rounded-circle">
                       </div>
-                      {% if searched %}
-                        <h3 class="mb-0">You found {{ searched }}...</h3>
-                        <hr>
-                        {% for offer in offers %}
-                          <div style="display: flex;">
-                            <p style="margin-right: 10px;">offer name and specialist:</p>
-                            <h6><a href="{% url "catalog:offer-detail" pk=offer.id %} "> {{ offer }}</a></h6>
-                          </div>
-                        {% endfor %}
-                        {% else %}
-                          <h4>please enter your search request....</h4>
-                      {% endif %}
+                     {% if searched %}
+    <h3 class="mb-0">You found {{ searched }}...</h3>
+    <hr>
+    {% if offers %}
+        {% for offer in offers %}
+            <div style="display: flex;">
+                <p style="margin-right: 10px;">offer name and specialist:</p>
+                <h6><a href="{% url "catalog:offer-detail" pk=offer.pk %}">{{ offer.name }}</a></h6>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No results found</p>
+    {% endif %}
+{% else %}
+    <h4>Please enter your search request...</h4>
+{% endif %}
                   </div>
               </div>
             </div>

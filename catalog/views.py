@@ -4,22 +4,26 @@ from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
+from django.views.generic import TemplateView
 
 from catalog.forms import AuthorsForm, UserRegistrationForm, CommentariesForm
 from catalog.models import Author, Offer, Service, Commentary
 
 
-def index(request: HttpRequest) -> HttpResponse:
-    num_authors = Author.objects.count()
-    num_offers = Offer.objects.count()
-    num_services = Service.objects.count()
-
-    context = {
-        "num_authors": num_authors,
-        "num_offers": num_offers,
-        "num_services": num_services,
-    }
-    return render(request, "catalog/index.html", context=context)
+class IndexView(generic.ListView):
+    model = Author
+    template_name = 'catalog/index.html'
+# def index(request: HttpRequest) -> HttpResponse:
+#     num_authors = Author.objects.count()
+#     num_offers = Offer.objects.count()
+#     num_services = Service.objects.count()
+#
+#     context = {
+#         "num_authors": num_authors,
+#         "num_offers": num_offers,
+#         "num_services": num_services,
+#     }
+#     return render(request, "catalog/index.html", context=context)
 
 
 class ServiceListView(generic.ListView):
@@ -129,41 +133,44 @@ class AuthorDetailView(generic.DetailView):
         return context
 
 
-def register(request):
-    if request.user.is_authenticated:
-        return redirect("/")
-    if request.method == "POST":
-        form = UserRegistrationForm(request.POST, request.FILES)
-        if form.is_valid():
-            author = form.save()
-            login(request, author)
-            return redirect("/")
+class RegisterView(LoginRequiredMixin, generic.CreateView):
+    model = Author
+    form_class = UserRegistrationForm
+    template_name = "registration/register.html"
+    success_url = reverse_lazy("/")
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user.is_authenticated:
+            return redirect(self.success_url)
+        if request.method == "POST":
+            form = UserRegistrationForm(request.POST, request.FILES)
+            if form.is_valid():
+                author = form.save()
+                login(request, author)
+                return redirect("/")
+
+            else:
+                for error in list(form.errors.values()):
+                    print(request, error)
 
         else:
-            for error in list(form.errors.values()):
-                print(request, error)
+            form = UserRegistrationForm()
 
-    else:
-        form = UserRegistrationForm()
-
-    return render(
-        request=request,
-        template_name="registration/register.html",
-        context={"form": form},
-    )
+        return render(
+            request=request,
+            template_name="registration/register.html",
+            context={"form": form},
+        )
 
 
-def search_offer(request):
-    if request.method == "POST":
+class SearchOfferView(generic.ListView):
+    model = Offer
+    template_name = "catalog/offer_search.html"
+
+    def post(self, request, *args, **kwargs):
         searched = request.POST["searched"]
         offers = Offer.objects.filter(name__icontains=searched)
-        return render(
-            request,
-            "catalog/offer_search.html",
-            {"searched": searched, "offers": offers},
-        )
-    else:
-        return render(request, "catalog/offer_search.html", {})
+        return render(request, "catalog/offer_search.html", {"searched": searched, "offers": offers})
 
 
 class AddCommentCreateView(LoginRequiredMixin, generic.CreateView):
@@ -202,12 +209,16 @@ class CommentaryDeleteView(LoginRequiredMixin, generic.DeleteView):
             "catalog:offer-detail", kwargs={"pk": self.object.offer.pk}
         )
 
+    def check_access(self):
+        if self.object.user != self.request.user:
+            return HttpResponseForbidden(render(self.request, "catalog/forbidden.html"))
+        return None
+
     def dispatch(self, request, *args, **kwargs):
         self.object = self.get_object()
-        if (
-            self.object.user != self.request.user
-        ):
-            return HttpResponseForbidden(render(request, "catalog/forbidden.html"))
+        response = self.check_access()
+        if response:
+            return response
         return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
@@ -235,37 +246,37 @@ class CommentaryUpdateView(LoginRequiredMixin, generic.UpdateView):
         return super().dispatch(request, *args, **kwargs)
 
 
-def info(request):
-    return render(request, "includes/info_general.html")
+class InfoView(TemplateView):
+    template_name = "includes/info_general.html"
 
 
-def cars(request):
-    return render(request, "includes/cars.html")
+class CarsView(TemplateView):
+    template_name = "includes/cars.html"
 
 
-def insurance(request):
-    return render(request, "includes/insurance.html")
+class InsuranceView(TemplateView):
+    template_name = "includes/insurance.html"
 
 
-def hospital(request):
-    return render(request, "includes/hospital.html")
+class HospitalView(TemplateView):
+    template_name = "includes/hospital.html"
 
 
-def custom(request):
-    return render(request, "includes/custom.html")
+class CustomView(TemplateView):
+    template_name = "includes/custom.html"
 
 
-def canyons(request):
-    return render(request, "includes/canyons.html")
+class CanyonsView(TemplateView):
+    template_name = "includes/canyons.html"
 
 
-def springs(request):
-    return render(request, "includes/springs.html")
+class SpringsView(TemplateView):
+    template_name = "includes/springs.html"
 
 
-def beaches(request):
-    return render(request, "includes/beaches.html")
+class BeachesView(TemplateView):
+    template_name = "includes/beaches.html"
 
 
-def hammam(request):
-    return render(request, "includes/hammam.html")
+class HammamView(TemplateView):
+    template_name = "includes/hammam.html"
