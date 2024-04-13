@@ -1,6 +1,6 @@
 from django.contrib.auth import login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpRequest, HttpResponse, HttpResponseForbidden
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,20 +10,8 @@ from catalog.forms import AuthorsForm, UserRegistrationForm, CommentariesForm
 from catalog.models import Author, Offer, Service, Commentary
 
 
-class IndexView(generic.ListView):
-    model = Author
+class IndexView(TemplateView):
     template_name = 'catalog/index.html'
-# def index(request: HttpRequest) -> HttpResponse:
-#     num_authors = Author.objects.count()
-#     num_offers = Offer.objects.count()
-#     num_services = Service.objects.count()
-#
-#     context = {
-#         "num_authors": num_authors,
-#         "num_offers": num_offers,
-#         "num_services": num_services,
-#     }
-#     return render(request, "catalog/index.html", context=context)
 
 
 class ServiceListView(generic.ListView):
@@ -49,20 +37,13 @@ class ServiceOfferListView(generic.ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["master_names"] = [
-            offer.posted_by.username for offer in context["offers"]
-        ]
+        context["service"] = get_object_or_404(Service, pk=self.kwargs["service_id"])
         return context
 
     def get_queryset(self):
         service_id = self.kwargs["service_id"]
         service = get_object_or_404(Service, pk=service_id)
         return service.offers.all()
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["service"] = get_object_or_404(Service, pk=self.kwargs["service_id"])
-        return context
 
 
 class ServiceCreateView(LoginRequiredMixin, generic.CreateView):
@@ -133,7 +114,7 @@ class AuthorDetailView(generic.DetailView):
         return context
 
 
-class RegisterView(LoginRequiredMixin, generic.CreateView):
+class RegisterView(generic.CreateView):
     model = Author
     form_class = UserRegistrationForm
     template_name = "registration/register.html"
@@ -142,19 +123,23 @@ class RegisterView(LoginRequiredMixin, generic.CreateView):
     def dispatch(self, request, *args, **kwargs):
         if self.request.user.is_authenticated:
             return redirect(self.success_url)
-        if request.method == "POST":
-            form = UserRegistrationForm(request.POST, request.FILES)
-            if form.is_valid():
-                author = form.save()
-                login(request, author)
-                return redirect("/")
+        return super().dispatch(request, *args, **kwargs)
 
-            else:
-                for error in list(form.errors.values()):
-                    print(request, error)
+    def post(self, request, *args, **kwargs):
+        form = UserRegistrationForm(request.POST, request.FILES)
+        if form.is_valid():
+            author = form.save()
+            login(request, author)
+            return redirect("/")
 
-        else:
-            form = UserRegistrationForm()
+        return render(
+            request=request,
+            template_name="registration/register.html",
+            context={"form": form},
+        )
+
+    def get(self, request, *args, **kwargs):
+        form = UserRegistrationForm()
 
         return render(
             request=request,
