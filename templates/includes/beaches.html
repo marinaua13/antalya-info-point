@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Canyon page {% endblock title %}
+{% block body %} class="about-us bg-gray-200" {% endblock body %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<span class="mask bg-gradient-primary opacity-1"></span>
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header min-vh-75" style="background-image: url('{% static 'img/beaches.jpg' %}');">
+      <span class="mask bg-gradient-primary opacity-2"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-whites">Here is information about Antalya beaches...</h1>
+            <p class="lead mb-4 text-white opacity-8">
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+  <!-- START Testimonials w/ user image & text & info -->
+  <section class="py-sm-2 py-5 position-relative">
+<body>
+    <div class="container">
+        <h1>About beaches in Antalya...</h1>
+        <p>Lorem ipsum dolor sit amet. Est molestiae sint in exercitationem perferendis 
+          sed praesentium culpa qui natus nihil vel magni totam et dolorem suscipit ut 
+          sapiente nemo. In dolore mollitia aut perspiciatis velit est repudiandae illo. 
+          Aut harum autem eos velit quidem aut fuga nihil qui dolore optio aut assumenda nemo 
+          et molestiae internos sed quia repudiandae. Et inventore similique et dolore sapiente 
+          qui necessitatibus itaque ab nihil dolores.
+          Sed officiis provident non nisi dolore ad galisum assumenda aut 
+          voluptatibus impedit est saepe ratione! Cum animi necessitatibus vel 
+          dolor amet aut reprehenderit impedit sed eius dolorum.
+          Sed dolor eaque et Quis debitis 33 eaque officiis! Et omnis iste 
+          ea internos illum ea voluptas delectus nam suscipit architecto!</p>
+      
+    </div>
+</body>
+  </section>
+</div>
+{% endblock %}

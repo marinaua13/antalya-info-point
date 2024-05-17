@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock title %}
+{% block body %} class="about-us bg-gray-200" {% endblock body %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<span class="mask bg-gradient-primary opacity-1"></span>
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+      <span class="mask bg-gradient-primary opacity-2"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-whites">Here you can find list of specialists...</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+  {% if object_list %}
+    <div class="row">
+      {% for author in object_list %}
+        {% if author.offers.exists %}
+          <div class="col-md-6 mb-6">
+            <div class="offer-card p-3 border rounded bg-cru">
+              <h3><a href="{% url 'catalog:author-detail' pk=author.id %}">{{ author.username }}</a></h3>
+              <p>{{ author.mobile_phone }}</p>
+            </div>
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>There are no offers in catalog</p>
+  {% endif %}
+
+  <!-- Pagination -->
+  {% if is_paginated %}
+    <div style="display: flex; justify-content: center; align-items: center; margin-top: 20px;">
+        <ul class="pagination mb-0">
+            {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1"><span>First</span></a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Prev</a>
+                </li>
+            {% endif %}
+            <li class="page-item">
+                <span class="page-link">{{ page_obj.number }}</span>
+            </li>
+            {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">Last</a>
+                </li>
+            {% endif %}
+        </ul>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}

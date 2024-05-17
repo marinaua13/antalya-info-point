@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<!-- -------- START HEADER 7 w/ text and video ------- -->
+<header class="bg-gradient-dark">
+  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+    <span class="mask bg-gradient-primary opacity-2"></span>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8 text-center mx-auto my-auto">
+          <h1 class="text-whites">You can choose an offer and find contact of master </h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <!-- START Testimonials w/ user image & text & info -->
+    <section class="py-sm-7 py-0 position-relative bg-cru">
+        <div class="container">
+          <div class="col-12 mx-auto">
+            <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <h3 class="mb-0">{{ offer.name }}</h3> 
+                <a href="{% url 'catalog:offer-list' %}" class="btn bg-gradient-secondary w-auto me-2">Back to Offers</a>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;"> Master</p>
+               <h6>{{ offer.posted_by }}</h6>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;"> Mobile:</p>
+                <h6>{{ offer.posted_by.mobile_phone }}</h6>
+              </div>
+               <div style="display: flex;">
+                <p style="margin-right: 10px;">Price:</p>
+                <h6>{{ offer.price }}</h6>
+              </div>
+              <div style="display: flex;">
+                <p style="margin-right: 10px;">Company:</p>
+                <h6>{{ offer.company }}</h6>
+              </div>
+              {% if offer.description %}
+              <div style="display: flex;">
+                <p style="margin-right: 10px;">About:</p>
+                <h6>{{ offer.description }}</h6>
+              </div>
+              {% else %}
+              <div>
+                  <p>🌺 🌺 🌺</p>
+              </div>
+              {% endif %}
+            
+<hr style="background-color: #1f2937; height: 3px; border: none;">
+                        
+              <form  id="contact-form" method="post">
+                <div class="card-body pt-1">
+                  <div class="row">
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4"></div>
+                    </div>
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4">
+                      <p><strong>Comments:</strong></p>
+                      <ul>
+                        {% if not offer.commentaries.all %}
+                          <p>No Comments Yet... </p>
+                        {% endif %}
+                        {% for comment in offer.commentaries.all %}
+                          <li>
+                            <strong>{{ comment.created_time }}</strong><br>
+                            {{ comment.user }}:<a href="{% url 'catalog:comment-detail' pk=comment.id %}">  {{ comment.content }}</a>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      </div>
+                    </div>
+                    <div class="col-md-12 pe-2 mb-3">
+                      <div class="input-group input-group-static mb-4">
+                        <a href="{% url 'catalog:offer-comment-create' pk=offer.id %}" class="btn bg-gradient-secondary w-auto me-2">Add Comment</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}

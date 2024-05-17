@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Service page {% endblock title %}
+{% block body %} class="about-us bg-gray-200" {% endblock body %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<span class="mask bg-gradient-primary opacity-1"></span>
+  <!-- -------- START HEADER 7 w/ text and video ------- -->
+  <header class="bg-gradient-dark">
+    <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+      <span class="mask bg-gradient-primary opacity-2"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-whites">Here you can find offers according service that you choose</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6">
+  <section class="py-sm-7 py-5 position-relative bg-cru">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mx-auto">
+                    <div class="mt-n8 mt-md-n9 text-center">
+                        <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'img/turkisheye.jpg' %}"  loading="lazy">
+                    </div>
+                    <div class="row py-5">
+                      <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                          <h2 class="mb-0">{{ service.name }}</h2>
+                        </div>
+                        {% for offer in offers %}
+                        <div class="offer">
+                          <h5><a href="{% url 'catalog:offer-detail' pk=offer.id %}">{{ offer.name }}</a> </h5>
+                          <p>{{ offer.description }}</p>
+                          <p>{{ master_names }}</p>
+                        </div>
+                        {% endfor %}
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

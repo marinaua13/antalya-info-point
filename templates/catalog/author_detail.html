@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Specialist page {% endblock %}
+
+{% block header %}
+{% include 'includes/../includes/navigation.html' %}
+{% endblock header %}
+
+{% block content %}
+<!-- -------- START HEADER 7 w/ text and video ------- -->
+<header class="bg-gradient-dark">
+  <div class="page-header min-vh-75" style="background-image: url('{% static 'img/door1.jpg' %}');">
+    <span class="mask bg-gradient-primary opacity-2"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-8 text-center mx-auto my-auto">
+            <h1 class="text-whites">Here you can find information about specialist</h1>
+          </div>
+        </div>
+      </div>
+    </div>
+</header>
+<div class="card card-body blur shadow-blur mx-3 mx-md-4 mt-n6 mb-4">
+    <!-- START Testimonials w/ user image & text & info -->
+    <section class="py-sm-7 py-5 position-relative bg-cru">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mx-auto">
+                <a href="{% url 'catalog:author-update' pk=author.id %}" 
+                   class="btn btn-secondary link-to-page">Update data & photo
+                </a>
+        
+                </div>
+                  <div class="col-lg-7 col-md-7 z-index-2 position-relative px-md-2 px-sm-5 mx-auto">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        {% if author.picture %}
+                          <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{{ author.picture.url }}" alt="{{ author.username }}'s Picture" class="img-fluid rounded-circle">
+                        {% else %}
+                          <img class="avatar avatar-xxl shadow-xl position-relative z-index-2" src="{% static 'default_image.jpg' %}" alt="Default Picture" class="img-fluid rounded-circle">
+                        {% endif %}
+                      </div>
+                      <h3 class="mb-0">{{ author.username }}</h3>
+                      <hr>
+                      <div style="display: flex;">
+                          <p style="margin-right: 10px;">First name:</p>
+                          <h6>{{ author.first_name }}</h6>
+                      </div>
+                      <div style="display: flex;">
+                          <p style="margin-right: 10px;">Last name:</p>
+                          <h6>{{ author.last_name }}</h6>
+                      </div>
+                      <div style="display: flex;">
+                          <p style="margin-right: 10px;">Email:</p>
+                          <h6>{{ author.email }}</h6>
+                      </div>
+                      <div style="display: flex;">
+                          <p style="margin-right: 10px;">Mobile:</p>
+                          <h6>{{ author.mobile_phone }}</h6>
+                      </div>
+                      <div style="display: flex;">
+                          <p style="margin-right: 10px;">Years of experience:</p>
+                          <h6>{{ author.years_of_experience }}</h6>
+                      </div>
+  
+                      <div class="ml-3 mt-4">
+                         <h5>More offers for you...</h5>
+                          {% for offer in author.offers.all %}
+                        <hr>
+                        <div style="display: flex;">
+                          <p style="margin-right: 10px;">Name:</p>
+                          <h6><a href="{% url "catalog:offer-detail" pk=offer.id %} ">{{ offer.name }}</a></h6>
+                        </div>
+                        <div style="display: flex;">
+                          <p style="margin-right: 10px;">Service:</p>
+                          <h6>{{ offer.service_type.name }}</h6>
+                        </div>
+                        <div style="display: flex;">
+                          <p style="margin-right: 10px;">Offer id:</p>
+                          <h6>{{ offer.id }}</h6>
+                        </div>
+                          {% empty %}
+                            <p>No offers!</p>
+                            <a href="{% url 'catalog:offer-list' %}" 
+                               class="btn btn-primary link-to-page">Go back to Offers
+                            </a>
+                          {% endfor %}
+                      </div>
+                  </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock content %}
